@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
+  <hashTree>
+    <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="true"/>
+    <hashTree>
+      <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP : DATAVIEW : UPDATE  [AGE] &gt; 50 AND startsWith([W_NAME], &apos;M&apos;)" enabled="true">
+        <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">{&#xd;
+    &quot;name&quot;: &quot;${DVD_NAME}&quot;,&#xd;
+    &quot;info&quot;: &quot;Multi-Sort of agetime table &quot;,&#xd;
+    &quot;ttl&quot;: &quot;1 h&quot;,&#xd;
+    &quot;starts&quot;: [&#xd;
+        {&#xd;
+            &quot;query&quot;: &quot;SELECT * FROM agetime&quot;,&#xd;
+            &quot;name&quot;: &quot;damien&quot;,&#xd;
+            &quot;type&quot;: &quot;sql&quot;,&#xd;
+              &quot;connection&quot;: {&#xd;
+   	   &quot;type&quot;:&quot;jdbc&quot;,&#xd;
+        &quot;driver&quot;: &quot;com.vertica.jdbc.Driver&quot;,&#xd;
+        &quot;url&quot;: &quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,&#xd;
+        &quot;user&quot;: &quot;dba&quot;,&#xd;
+        &quot;password&quot;: &quot;dbavertica&quot;&#xd;
+      }&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;operations&quot;: [&#xd;
+		{&#xd;
+		    &quot;name&quot;:  &quot;startsWith&quot;,&#xd;
+		    &quot;source&quot;: &quot;damien&quot;,&#xd;
+		    &quot;type&quot;: &quot;filter&quot;,&#xd;
+		    &quot;expression&quot;: &quot;[AGE] &gt; 50 AND startsWith([W_NAME], &apos;M&apos;)&quot;,&#xd;
+    		    &quot;alias&quot;:&quot;calc output&quot;&#xd;
+		}&#xd;
+    ],&#xd;
+    &quot;ends&quot;: [&#xd;
+        {&#xd;
+            &quot;type&quot;: &quot;return&quot;,&#xd;
+            &quot;includeMetadata&quot;: {&#xd;
+                &quot;rowCount&quot;: true&#xd;
+            }&#xd;
+        }&#xd;
+    ]&#xd;
+}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${NODE_SERVER}</stringProp>
+        <stringProp name="HTTPSampler.port">3000</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol"></stringProp>
+        <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+        <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+        <stringProp name="HTTPSampler.method">PUT</stringProp>
+        <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+        <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+        <boolProp name="HTTPSampler.monitor">false</boolProp>
+        <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+      </HTTPSamplerProxy>
+      <hashTree/>
+      <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP : DATA : READ" enabled="true">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="$skip" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">0</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">$skip</stringProp>
+            </elementProp>
+            <elementProp name="$top" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">25</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">$top</stringProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${NODE_SERVER}</stringProp>
+        <stringProp name="HTTPSampler.port">3000</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol"></stringProp>
+        <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+        <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+        <stringProp name="HTTPSampler.method">GET</stringProp>
+        <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+        <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+        <boolProp name="HTTPSampler.monitor">false</boolProp>
+        <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+      </HTTPSamplerProxy>
+      <hashTree/>
+      <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP : DATAVIEW : UPDATE &quot;[STATE] in (&apos;VA&apos;,&apos;MD&apos;,&apos;DC&apos;)&quot;" enabled="true">
+        <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">{&#xd;
+    &quot;name&quot;: &quot;${DVD_NAME}&quot;,&#xd;
+    &quot;info&quot;: &quot;Multi-Sort of agetime table &quot;,&#xd;
+    &quot;ttl&quot;: &quot;1 h&quot;,&#xd;
+    &quot;starts&quot;: [&#xd;
+        {&#xd;
+            &quot;query&quot;: &quot;SELECT * FROM agetime&quot;,&#xd;
+            &quot;name&quot;: &quot;damien&quot;,&#xd;
+            &quot;type&quot;: &quot;sql&quot;,&#xd;
+              &quot;connection&quot;: {&#xd;
+   	   &quot;type&quot;:&quot;jdbc&quot;,&#xd;
+        &quot;driver&quot;: &quot;com.vertica.jdbc.Driver&quot;,&#xd;
+        &quot;url&quot;: &quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,&#xd;
+        &quot;user&quot;: &quot;dba&quot;,&#xd;
+        &quot;password&quot;: &quot;dbavertica&quot;&#xd;
+      }&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;operations&quot;: [&#xd;
+		{&#xd;
+		    &quot;name&quot;:  &quot;endsWith&quot;,&#xd;
+		    &quot;source&quot;: &quot;damien&quot;,&#xd;
+		    &quot;type&quot;: &quot;filter&quot;,&#xd;
+		    &quot;expression&quot;: &quot;[STATE] in (&apos;VA&apos;,&apos;MD&apos;,&apos;DC&apos;)&quot;,&#xd;
+    		    &quot;alias&quot;:&quot;calc output&quot;&#xd;
+		}&#xd;
+    ],&#xd;
+    &quot;ends&quot;: [&#xd;
+        {&#xd;
+            &quot;type&quot;: &quot;return&quot;,&#xd;
+            &quot;includeMetadata&quot;: {&#xd;
+                &quot;rowCount&quot;: true&#xd;
+            }&#xd;
+        }&#xd;
+    ]&#xd;
+}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${NODE_SERVER}</stringProp>
+        <stringProp name="HTTPSampler.port">3000</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol"></stringProp>
+        <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+        <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+        <stringProp name="HTTPSampler.method">PUT</stringProp>
+        <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+        <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+        <boolProp name="HTTPSampler.monitor">false</boolProp>
+        <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+      </HTTPSamplerProxy>
+      <hashTree/>
+      <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP : DATA : READ" enabled="true">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="$skip" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">0</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">$skip</stringProp>
+            </elementProp>
+            <elementProp name="$top" elementType="HTTPArgument">
+              <boolProp name="HTTPArgument.always_encode">false</boolProp>
+              <stringProp name="Argument.value">25</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              <stringProp name="Argument.name">$top</stringProp>
+            </elementProp>
+          </collectionProp>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${NODE_SERVER}</stringProp>
+        <stringProp name="HTTPSampler.port">3000</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol"></stringProp>
+        <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+        <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+        <stringProp name="HTTPSampler.method">GET</stringProp>
+        <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+        <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+        <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+        <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+        <boolProp name="HTTPSampler.monitor">false</boolProp>
+        <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+      </HTTPSamplerProxy>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

@@ -1,0 +1,3139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+  <hashTree>
+    <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Aggregate on Calculated Columns" enabled="true">
+      <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+      <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+        <boolProp name="LoopController.continue_forever">false</boolProp>
+        <stringProp name="LoopController.loops">1</stringProp>
+      </elementProp>
+      <stringProp name="ThreadGroup.num_threads">1</stringProp>
+      <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+      <longProp name="ThreadGroup.start_time">1432156742000</longProp>
+      <longProp name="ThreadGroup.end_time">1432156742000</longProp>
+      <boolProp name="ThreadGroup.scheduler">false</boolProp>
+      <stringProp name="ThreadGroup.duration"></stringProp>
+      <stringProp name="ThreadGroup.delay"></stringProp>
+    </ThreadGroup>
+    <hashTree>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+        <collectionProp name="HeaderManager.headers">
+          <elementProp name="" elementType="Header">
+            <stringProp name="Header.name">Content-Type</stringProp>
+            <stringProp name="Header.value">application/json</stringProp>
+          </elementProp>
+        </collectionProp>
+      </HeaderManager>
+      <hashTree/>
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+        <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments"/>
+        </elementProp>
+        <stringProp name="HTTPSampler.domain">${NODE_SERVER}</stringProp>
+        <stringProp name="HTTPSampler.port">3000</stringProp>
+        <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+        <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        <stringProp name="HTTPSampler.protocol">http</stringProp>
+        <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+        <stringProp name="HTTPSampler.path"></stringProp>
+        <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+        <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
+      </ConfigTestElement>
+      <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Supported Databases" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="DB_1" elementType="Argument">
+            <stringProp name="Argument.name">DB_1</stringProp>
+            <stringProp name="Argument.value">mysql</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DB_2" elementType="Argument">
+            <stringProp name="Argument.name">DB_2</stringProp>
+            <stringProp name="Argument.value">sqlserver</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DB_3" elementType="Argument">
+            <stringProp name="Argument.name">DB_3</stringProp>
+            <stringProp name="Argument.value">postgresql</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DB_4" elementType="Argument">
+            <stringProp name="Argument.name">DB_4</stringProp>
+            <stringProp name="Argument.value">vertica</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DB_5" elementType="Argument">
+            <stringProp name="Argument.name">DB_5</stringProp>
+            <stringProp name="Argument.value">oracle</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DB_6" elementType="Argument">
+            <stringProp name="Argument.name">DB_6</stringProp>
+            <stringProp name="Argument.value">h2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+        <stringProp name="TestPlan.comments">  All LOGI supported databases for NGP</stringProp>
+      </Arguments>
+      <hashTree/>
+      <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller - Aggregate on Calculated Columns - AS 2179 DS 2848" enabled="false">
+        <stringProp name="ForeachController.inputVal">DB</stringProp>
+        <stringProp name="ForeachController.returnVal">CONNECTION_TYPE</stringProp>
+        <boolProp name="ForeachController.useSeparator">true</boolProp>
+      </ForeachController>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set DVD Name" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">TEST_001</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Set Dataview Definition Name 
+
+vars.put(&quot;DVD_NAME&quot;, args[0]);
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Connection Block from Type" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">${CONNECTION_TYPE}</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Build CONNECTION from CONNECTION_TYPE
+
+var mysql_conn = 
+{
+     type : &quot;jdbc&quot;,
+     driver: &quot;com.mysql.jdbc.Driver&quot;,
+     url: &quot;jdbc:mysql://QaMySql/qanorthwind_info&quot;,
+     user: &quot;root&quot;,
+     password: &quot;LGXpass&quot;	  
+};
+var sqlserver_conn = 
+{
+     type: &quot;jdbc&quot;,
+	driver:&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;,
+     url:&quot;jdbc:sqlserver://QASQL2K8:1433;databaseName=LargeNorthwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;LGXpass&quot; 
+};
+var postgresql_conn =  
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;org.postgresql.Driver&quot;,
+	url: &quot;jdbc:postgresql://qamysql.logixml.local:6432/qanorthwind_cs&quot;,
+	user: &quot;postgres&quot;,
+	password: &quot;LGXpass&quot;
+};
+var vertica_conn = 
+{
+     &quot;type&quot;: &quot;jdbc&quot;,
+     &quot;driver&quot;:&quot;com.vertica.jdbc.Driver&quot;,
+     &quot;url&quot;:&quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,
+     &quot;user&quot;:&quot;northwind&quot;,
+     &quot;password&quot;:&quot;lgxadmin&quot;
+
+};
+var oracle_conn = 
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;oracle.jdbc.driver.OracleDriver&quot;,
+     url: &quot;jdbc:oracle:thin:@//QAORACLE11G.logixml.local/LOGIXML&quot;,
+     user: &quot;northwindqa_cs&quot;,
+     password: &quot;NorthwindQA_CS&quot;           	            
+};
+var h2_conn = 
+{
+	type: &quot;jdbc&quot;,
+     driver:&quot;org.h2.Driver&quot;,
+     url:&quot;jdbc:h2:tcp://localhost/Northwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;&quot;
+};
+
+var connList = {};
+
+connList[&apos;mysql&apos;] = mysql_conn;
+connList[&apos;sqlserver&apos;] = sqlserver_conn;
+connList[&apos;postgresql&apos;] = postgresql_conn;
+connList[&apos;vertica&apos;] = vertica_conn;
+connList[&apos;oracle&apos;] = oracle_conn;
+connList[&apos;h2&apos;] = h2_conn; 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var conn = JSON.stringify(connList[args[0]]);
+
+vars.put(&apos;CONNECTION&apos;,conn);
+
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Query" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">SELECT * FROM Orders</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Reformat and set QUERY for CONNECTION_TYPE 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var connFlags = {};
+connFlags[&apos;mysql&apos;] = { quoteIdentifiers: true, quoteChar: &quot;`&quot;, caseFlag : 0 };
+connFlags[&apos;sqlserver&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;postgresql&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;vertica&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;oracle&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 1 };
+connFlags[&apos;h2&apos;] = { quoteIdentifiers: false, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+
+var quoteIdentifiers = false;
+var caseFlag = 0;    // leavealone = 0, upcase = 1, downcase = -1, camelcase = ?  
+
+var type = vars.get(&quot;CONNECTION_TYPE&quot;);
+
+quoteIdentifiers = connFlags[type].quoteIdentifiers;
+quoteChar = connFlags[type].quoteChar;
+caseFlag = connFlags[type].caseFlag;
+
+log.info(&quot;connection: &quot;+type);
+log.info(  &quot;quoteIdentifiers: &quot;+quoteIdentifiers);
+log.info(&quot;  quoteChar: &quot;+quoteChar);
+log.info(&quot;  caseFlag: &quot;+caseFlag);
+
+function fixIdent(idname,quote,quoteChar,caseflag) {
+
+     var id;
+	switch (caseflag) {
+
+		case 0:  // leave alone
+		    id = idname;
+		    break;
+		case 1: // upcase
+		    id = idname.toUpperCase();
+		    break;
+	     case -1: // downcase
+	         id = idname.toLowerCase();
+	         break;
+	     default:
+	         id = idname;
+	         break;
+	     
+	}
+
+	if (quote) {
+		id = quoteChar + id + quoteChar;
+	}
+	return id;
+}
+
+//var query = &quot;Select \\&quot;ProductName\\&quot;,\\&quot;CategoryID\\&quot;,\\&quot;UnitPrice\\&quot; FROM \\&quot;Products\\&quot; &quot;;
+var query = Parameters; 
+
+if (quoteIdentifiers) {
+
+	var toks = query.split(&quot; &quot;);
+	var identifiers = toks[1];
+     var ids;
+
+     var wildcard_ids = identifiers == &quot;*&quot;;
+
+     var q = &quot;SELECT &quot;;
+     
+	if (wildcard_ids) {
+	   ids = &quot; * &quot;;	   
+	} else {
+        ids = identifiers.split(&quot;,&quot;);
+	}
+
+	var table = toks[3];
+
+	
+     if (wildcard_ids) {
+
+       q = q + ids;
+     } else {
+        var i=0;
+	   for (i=0; i&lt;ids.length-1; i++) {
+
+		 q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)+&quot;,&quot;;
+		
+	   }
+	   q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)
+     }
+	q = q + &quot; FROM &quot; + fixIdent(table,quoteIdentifiers,quoteChar,caseFlag);
+
+	log.info(&quot;NEW query: &apos;&quot;+q+&quot;&apos;&quot;);
+     query = q;
+	
+}
+
+
+
+vars.put(&apos;QUERY&apos;,query);
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="►   ${__uppercase(${CONNECTION_TYPE})}" enabled="true">
+          <stringProp name="TestPlan.comments">   Emit Database Type</stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">
+ResponseCode = 200;
+ResponseMessage=&quot;Using DB:  ${CONNECTION_TYPE}&quot;;</stringProp>
+          <stringProp name="scriptLanguage">js</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : DELETE" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49590">204</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : CREATE " enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;name&quot;: &quot;${DVD_NAME}&quot;,&#xd;
+    &quot;info&quot;: &quot;Group on CategoryID and provide a max UnitPrice&quot;,&#xd;
+    &quot;starts&quot;: [&#xd;
+        {  &quot;type&quot; : &quot;sql&quot;,&#xd;
+           &quot;query&quot; : &quot;${QUERY}&quot;,&#xd;
+           &quot;connection&quot; : ${CONNECTION}&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;operations&quot;: [&#xd;
+	{&quot;type&quot;:&quot;calculation&quot;,&#xd;
+	&quot;alias&quot;:&quot;vatax&quot;,&#xd;
+	&quot;expression&quot;:&quot;[Freight] * 0.05&quot;&#xd;
+	},&#xd;
+		{&quot;type&quot;:&quot;calculation&quot;,&#xd;
+	&quot;alias&quot;:&quot;total&quot;,&#xd;
+	&quot;expression&quot;:&quot;[Freight] * [vatax]&quot;&#xd;
+	}	&#xd;
+    ],&#xd;
+    &quot;ends&quot;: [&#xd;
+        {&#xd;
+            &quot;type&quot;: &quot;return&quot;,&#xd;
+            &quot;includeMetadata&quot;: {&#xd;
+                &quot;rowCount&quot;: true&#xd;
+            }&#xd;
+        }&#xd;
+    ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : READ" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  Data : QUERY" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = true" enabled="false">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:11 rc:77</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = false" enabled="true">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:2 rc:8</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <fileName>true</fileName>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <boolProp name="useGroupName">true</boolProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller - Bug 2854 Calculate with .05" enabled="false">
+        <stringProp name="ForeachController.inputVal">DB</stringProp>
+        <stringProp name="ForeachController.returnVal">CONNECTION_TYPE</stringProp>
+        <boolProp name="ForeachController.useSeparator">true</boolProp>
+      </ForeachController>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set DVD Name" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">TEST_001</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Set Dataview Definition Name 
+
+vars.put(&quot;DVD_NAME&quot;, args[0]);
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Connection Block from Type" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">${CONNECTION_TYPE}</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Build CONNECTION from CONNECTION_TYPE
+
+var mysql_conn = 
+{
+     type : &quot;jdbc&quot;,
+     driver: &quot;com.mysql.jdbc.Driver&quot;,
+     url: &quot;jdbc:mysql://QaMySql/qanorthwind_info&quot;,
+     user: &quot;root&quot;,
+     password: &quot;LGXpass&quot;	  
+};
+var sqlserver_conn = 
+{
+     type: &quot;jdbc&quot;,
+	driver:&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;,
+     url:&quot;jdbc:sqlserver://QASQL2K8:1433;databaseName=LargeNorthwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;LGXpass&quot; 
+};
+var postgresql_conn =  
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;org.postgresql.Driver&quot;,
+	url: &quot;jdbc:postgresql://qamysql.logixml.local:6432/qanorthwind_cs&quot;,
+	user: &quot;postgres&quot;,
+	password: &quot;LGXpass&quot;
+};
+var vertica_conn = 
+{
+     &quot;type&quot;: &quot;jdbc&quot;,
+     &quot;driver&quot;:&quot;com.vertica.jdbc.Driver&quot;,
+     &quot;url&quot;:&quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,
+     &quot;user&quot;:&quot;northwind&quot;,
+     &quot;password&quot;:&quot;lgxadmin&quot;
+
+};
+var oracle_conn = 
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;oracle.jdbc.driver.OracleDriver&quot;,
+     url: &quot;jdbc:oracle:thin:@//QAORACLE11G.logixml.local/LOGIXML&quot;,
+     user: &quot;northwindqa_cs&quot;,
+     password: &quot;NorthwindQA_CS&quot;           	            
+};
+var h2_conn = 
+{
+	type: &quot;jdbc&quot;,
+     driver:&quot;org.h2.Driver&quot;,
+     url:&quot;jdbc:h2:tcp://localhost/Northwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;&quot;
+};
+
+var connList = {};
+
+connList[&apos;mysql&apos;] = mysql_conn;
+connList[&apos;sqlserver&apos;] = sqlserver_conn;
+connList[&apos;postgresql&apos;] = postgresql_conn;
+connList[&apos;vertica&apos;] = vertica_conn;
+connList[&apos;oracle&apos;] = oracle_conn;
+connList[&apos;h2&apos;] = h2_conn; 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var conn = JSON.stringify(connList[args[0]]);
+
+vars.put(&apos;CONNECTION&apos;,conn);
+
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Query" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">SELECT * FROM Orders</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Reformat and set QUERY for CONNECTION_TYPE 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var connFlags = {};
+connFlags[&apos;mysql&apos;] = { quoteIdentifiers: true, quoteChar: &quot;`&quot;, caseFlag : 0 };
+connFlags[&apos;sqlserver&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;postgresql&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;vertica&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;oracle&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 1 };
+connFlags[&apos;h2&apos;] = { quoteIdentifiers: false, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+
+var quoteIdentifiers = false;
+var caseFlag = 0;    // leavealone = 0, upcase = 1, downcase = -1, camelcase = ?  
+
+var type = vars.get(&quot;CONNECTION_TYPE&quot;);
+
+quoteIdentifiers = connFlags[type].quoteIdentifiers;
+quoteChar = connFlags[type].quoteChar;
+caseFlag = connFlags[type].caseFlag;
+
+log.info(&quot;connection: &quot;+type);
+log.info(  &quot;quoteIdentifiers: &quot;+quoteIdentifiers);
+log.info(&quot;  quoteChar: &quot;+quoteChar);
+log.info(&quot;  caseFlag: &quot;+caseFlag);
+
+function fixIdent(idname,quote,quoteChar,caseflag) {
+
+     var id;
+	switch (caseflag) {
+
+		case 0:  // leave alone
+		    id = idname;
+		    break;
+		case 1: // upcase
+		    id = idname.toUpperCase();
+		    break;
+	     case -1: // downcase
+	         id = idname.toLowerCase();
+	         break;
+	     default:
+	         id = idname;
+	         break;
+	     
+	}
+
+	if (quote) {
+		id = quoteChar + id + quoteChar;
+	}
+	return id;
+}
+
+//var query = &quot;Select \\&quot;ProductName\\&quot;,\\&quot;CategoryID\\&quot;,\\&quot;UnitPrice\\&quot; FROM \\&quot;Products\\&quot; &quot;;
+var query = Parameters; 
+
+if (quoteIdentifiers) {
+
+	var toks = query.split(&quot; &quot;);
+	var identifiers = toks[1];
+     var ids;
+
+     var wildcard_ids = identifiers == &quot;*&quot;;
+
+     var q = &quot;SELECT &quot;;
+     
+	if (wildcard_ids) {
+	   ids = &quot; * &quot;;	   
+	} else {
+        ids = identifiers.split(&quot;,&quot;);
+	}
+
+	var table = toks[3];
+
+	
+     if (wildcard_ids) {
+
+       q = q + ids;
+     } else {
+        var i=0;
+	   for (i=0; i&lt;ids.length-1; i++) {
+
+		 q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)+&quot;,&quot;;
+		
+	   }
+	   q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)
+     }
+	q = q + &quot; FROM &quot; + fixIdent(table,quoteIdentifiers,quoteChar,caseFlag);
+
+	log.info(&quot;NEW query: &apos;&quot;+q+&quot;&apos;&quot;);
+     query = q;
+	
+}
+
+
+
+vars.put(&apos;QUERY&apos;,query);
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="►   ${__uppercase(${CONNECTION_TYPE})}" enabled="true">
+          <stringProp name="TestPlan.comments">   Emit Database Type</stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">
+ResponseCode = 200;
+ResponseMessage=&quot;Using DB:  ${CONNECTION_TYPE}&quot;;</stringProp>
+          <stringProp name="scriptLanguage">js</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : DELETE" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49590">204</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : CREATE " enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;name&quot;: &quot;${DVD_NAME}&quot;,&#xd;
+    &quot;info&quot;: &quot;Group on CategoryID and provide a max UnitPrice&quot;,&#xd;
+    &quot;starts&quot;: [&#xd;
+        {  &quot;type&quot; : &quot;sql&quot;,&#xd;
+           &quot;query&quot; : &quot;${QUERY}&quot;,&#xd;
+           &quot;connection&quot; : ${CONNECTION}&#xd;
+        }&#xd;
+    ],&#xd;
+    &quot;operations&quot;: [&#xd;
+	{&quot;type&quot;:&quot;calculation&quot;,&#xd;
+	&quot;alias&quot;:&quot;vatax&quot;,&#xd;
+	&quot;expression&quot;:&quot;[Freight] * .05&quot;&#xd;
+	}&#xd;
+&#xd;
+    ],&#xd;
+    &quot;ends&quot;: [&#xd;
+        {&#xd;
+            &quot;type&quot;: &quot;return&quot;,&#xd;
+            &quot;includeMetadata&quot;: {&#xd;
+                &quot;rowCount&quot;: true&#xd;
+            }&#xd;
+        }&#xd;
+    ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : READ" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  Data : QUERY" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = true" enabled="false">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:11 rc:77</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = false" enabled="true">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:2 rc:8</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <fileName>true</fileName>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <boolProp name="useGroupName">true</boolProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller - Bin, Aggregate, Calculate the Aggregate with Freight DATAACQ-2855" enabled="false">
+        <stringProp name="ForeachController.inputVal">DB</stringProp>
+        <stringProp name="ForeachController.returnVal">CONNECTION_TYPE</stringProp>
+        <boolProp name="ForeachController.useSeparator">true</boolProp>
+      </ForeachController>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set DVD Name" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">TEST_001</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Set Dataview Definition Name 
+
+vars.put(&quot;DVD_NAME&quot;, args[0]);
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Connection Block from Type" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">${CONNECTION_TYPE}</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Build CONNECTION from CONNECTION_TYPE
+
+var mysql_conn = 
+{
+     type : &quot;jdbc&quot;,
+     driver: &quot;com.mysql.jdbc.Driver&quot;,
+     url: &quot;jdbc:mysql://QaMySql/qanorthwind_info&quot;,
+     user: &quot;root&quot;,
+     password: &quot;LGXpass&quot;	  
+};
+var sqlserver_conn = 
+{
+     type: &quot;jdbc&quot;,
+	driver:&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;,
+     url:&quot;jdbc:sqlserver://QASQL2K8:1433;databaseName=LargeNorthwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;LGXpass&quot; 
+};
+var postgresql_conn =  
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;org.postgresql.Driver&quot;,
+	url: &quot;jdbc:postgresql://qamysql.logixml.local:6432/qanorthwind_cs&quot;,
+	user: &quot;postgres&quot;,
+	password: &quot;LGXpass&quot;
+};
+var vertica_conn = 
+{
+     &quot;type&quot;: &quot;jdbc&quot;,
+     &quot;driver&quot;:&quot;com.vertica.jdbc.Driver&quot;,
+     &quot;url&quot;:&quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,
+     &quot;user&quot;:&quot;northwind&quot;,
+     &quot;password&quot;:&quot;lgxadmin&quot;
+
+};
+var oracle_conn = 
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;oracle.jdbc.driver.OracleDriver&quot;,
+     url: &quot;jdbc:oracle:thin:@//QAORACLE11G.logixml.local/LOGIXML&quot;,
+     user: &quot;northwindqa_cs&quot;,
+     password: &quot;NorthwindQA_CS&quot;           	            
+};
+var h2_conn = 
+{
+	type: &quot;jdbc&quot;,
+     driver:&quot;org.h2.Driver&quot;,
+     url:&quot;jdbc:h2:tcp://localhost/Northwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;&quot;
+};
+
+var connList = {};
+
+connList[&apos;mysql&apos;] = mysql_conn;
+connList[&apos;sqlserver&apos;] = sqlserver_conn;
+connList[&apos;postgresql&apos;] = postgresql_conn;
+connList[&apos;vertica&apos;] = vertica_conn;
+connList[&apos;oracle&apos;] = oracle_conn;
+connList[&apos;h2&apos;] = h2_conn; 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var conn = JSON.stringify(connList[args[0]]);
+
+vars.put(&apos;CONNECTION&apos;,conn);
+
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Query" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">SELECT * FROM Orders</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Reformat and set QUERY for CONNECTION_TYPE 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var connFlags = {};
+connFlags[&apos;mysql&apos;] = { quoteIdentifiers: true, quoteChar: &quot;`&quot;, caseFlag : 0 };
+connFlags[&apos;sqlserver&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;postgresql&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;vertica&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;oracle&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 1 };
+connFlags[&apos;h2&apos;] = { quoteIdentifiers: false, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+
+var quoteIdentifiers = false;
+var caseFlag = 0;    // leavealone = 0, upcase = 1, downcase = -1, camelcase = ?  
+
+var type = vars.get(&quot;CONNECTION_TYPE&quot;);
+
+quoteIdentifiers = connFlags[type].quoteIdentifiers;
+quoteChar = connFlags[type].quoteChar;
+caseFlag = connFlags[type].caseFlag;
+
+log.info(&quot;connection: &quot;+type);
+log.info(  &quot;quoteIdentifiers: &quot;+quoteIdentifiers);
+log.info(&quot;  quoteChar: &quot;+quoteChar);
+log.info(&quot;  caseFlag: &quot;+caseFlag);
+
+function fixIdent(idname,quote,quoteChar,caseflag) {
+
+     var id;
+	switch (caseflag) {
+
+		case 0:  // leave alone
+		    id = idname;
+		    break;
+		case 1: // upcase
+		    id = idname.toUpperCase();
+		    break;
+	     case -1: // downcase
+	         id = idname.toLowerCase();
+	         break;
+	     default:
+	         id = idname;
+	         break;
+	     
+	}
+
+	if (quote) {
+		id = quoteChar + id + quoteChar;
+	}
+	return id;
+}
+
+//var query = &quot;Select \\&quot;ProductName\\&quot;,\\&quot;CategoryID\\&quot;,\\&quot;UnitPrice\\&quot; FROM \\&quot;Products\\&quot; &quot;;
+var query = Parameters; 
+
+if (quoteIdentifiers) {
+
+	var toks = query.split(&quot; &quot;);
+	var identifiers = toks[1];
+     var ids;
+
+     var wildcard_ids = identifiers == &quot;*&quot;;
+
+     var q = &quot;SELECT &quot;;
+     
+	if (wildcard_ids) {
+	   ids = &quot; * &quot;;	   
+	} else {
+        ids = identifiers.split(&quot;,&quot;);
+	}
+
+	var table = toks[3];
+
+	
+     if (wildcard_ids) {
+
+       q = q + ids;
+     } else {
+        var i=0;
+	   for (i=0; i&lt;ids.length-1; i++) {
+
+		 q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)+&quot;,&quot;;
+		
+	   }
+	   q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)
+     }
+	q = q + &quot; FROM &quot; + fixIdent(table,quoteIdentifiers,quoteChar,caseFlag);
+
+	log.info(&quot;NEW query: &apos;&quot;+q+&quot;&apos;&quot;);
+     query = q;
+	
+}
+
+
+
+vars.put(&apos;QUERY&apos;,query);
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="►   ${__uppercase(${CONNECTION_TYPE})}" enabled="true">
+          <stringProp name="TestPlan.comments">   Emit Database Type</stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">
+ResponseCode = 200;
+ResponseMessage=&quot;Using DB:  ${CONNECTION_TYPE}&quot;;</stringProp>
+          <stringProp name="scriptLanguage">js</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : DELETE" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49590">204</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : CREATE " enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{  &#xd;
+  &quot;name&quot;:&quot;${DVD_NAME}&quot;,&#xd;
+  &quot;info&quot;:&quot;Group on CategoryID and provide a max UnitPrice&quot;,&#xd;
+  &quot;starts&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;sql&quot;,&#xd;
+      &quot;query&quot;:&quot;${QUERY}&quot;,&#xd;
+      &quot;connection&quot;:${CONNECTION}&#xd;
+    }&#xd;
+  ],&#xd;
+    &quot;operations&quot;: [&#xd;
+    {&#xd;
+      &quot;name&quot;: &quot;myBin&quot;,&#xd;
+      &quot;type&quot;: &quot;bin&quot;,&#xd;
+      &quot;alias&quot;: &quot;ShipViaBins&quot;,&#xd;
+      &quot;mode&quot;: {&#xd;
+        &quot;numberOfBins&quot;: 20,&#xd;
+        &quot;type&quot;: &quot;auto&quot;&#xd;
+      },&#xd;
+      &quot;column&quot;: {&#xd;
+        &quot;name&quot;: &quot;ShipVia&quot;&#xd;
+      }&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;aggregationColumns&quot;: [&#xd;
+        {&#xd;
+          &quot;alias&quot;: &quot;AverageFrieghtPerShipVia&quot;,&#xd;
+          &quot;name&quot;: &quot;Freight&quot;,&#xd;
+          &quot;aggregation&quot;: &quot;average&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;type&quot;: &quot;group&quot;,&#xd;
+      &quot;columns&quot;: [&#xd;
+        {&#xd;
+          &quot;name&quot;: &quot;ShipViaBins&quot;&#xd;
+        }&#xd;
+      ]&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;type&quot;: &quot;calculation&quot;,&#xd;
+      &quot;alias&quot;: &quot;FreightTimesAggregate&quot;,&#xd;
+      &quot;expression&quot;: &quot;[Freight] * AverageFrieghtPerShipVia&quot;&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;ends&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;return&quot;,&#xd;
+      &quot;includeMetadata&quot;:{  &#xd;
+        &quot;rowCount&quot;:true&#xd;
+      }&#xd;
+    }&#xd;
+  ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : READ" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  Data : QUERY" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = true" enabled="false">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:11 rc:77</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = false" enabled="true">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:2 rc:8</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <fileName>true</fileName>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <boolProp name="useGroupName">true</boolProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller - Bin, Aggregate, Calculate the Aggregate with Freight DATAACQ-2856" enabled="false">
+        <stringProp name="ForeachController.inputVal">DB</stringProp>
+        <stringProp name="ForeachController.returnVal">CONNECTION_TYPE</stringProp>
+        <boolProp name="ForeachController.useSeparator">true</boolProp>
+      </ForeachController>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set DVD Name" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">TEST_001</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Set Dataview Definition Name 
+
+vars.put(&quot;DVD_NAME&quot;, args[0]);
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Connection Block from Type" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">${CONNECTION_TYPE}</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Build CONNECTION from CONNECTION_TYPE
+
+var mysql_conn = 
+{
+     type : &quot;jdbc&quot;,
+     driver: &quot;com.mysql.jdbc.Driver&quot;,
+     url: &quot;jdbc:mysql://QaMySql/qanorthwind_info&quot;,
+     user: &quot;root&quot;,
+     password: &quot;LGXpass&quot;	  
+};
+var sqlserver_conn = 
+{
+     type: &quot;jdbc&quot;,
+	driver:&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;,
+     url:&quot;jdbc:sqlserver://QASQL2K8:1433;databaseName=LargeNorthwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;LGXpass&quot; 
+};
+var postgresql_conn =  
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;org.postgresql.Driver&quot;,
+	url: &quot;jdbc:postgresql://qamysql.logixml.local:6432/qanorthwind_cs&quot;,
+	user: &quot;postgres&quot;,
+	password: &quot;LGXpass&quot;
+};
+var vertica_conn = 
+{
+     &quot;type&quot;: &quot;jdbc&quot;,
+     &quot;driver&quot;:&quot;com.vertica.jdbc.Driver&quot;,
+     &quot;url&quot;:&quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,
+     &quot;user&quot;:&quot;northwind&quot;,
+     &quot;password&quot;:&quot;lgxadmin&quot;
+
+};
+var oracle_conn = 
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;oracle.jdbc.driver.OracleDriver&quot;,
+     url: &quot;jdbc:oracle:thin:@//QAORACLE11G.logixml.local/LOGIXML&quot;,
+     user: &quot;northwindqa_cs&quot;,
+     password: &quot;NorthwindQA_CS&quot;           	            
+};
+var h2_conn = 
+{
+	type: &quot;jdbc&quot;,
+     driver:&quot;org.h2.Driver&quot;,
+     url:&quot;jdbc:h2:tcp://localhost/Northwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;&quot;
+};
+
+var connList = {};
+
+connList[&apos;mysql&apos;] = mysql_conn;
+connList[&apos;sqlserver&apos;] = sqlserver_conn;
+connList[&apos;postgresql&apos;] = postgresql_conn;
+connList[&apos;vertica&apos;] = vertica_conn;
+connList[&apos;oracle&apos;] = oracle_conn;
+connList[&apos;h2&apos;] = h2_conn; 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var conn = JSON.stringify(connList[args[0]]);
+
+vars.put(&apos;CONNECTION&apos;,conn);
+
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Query" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">SELECT * FROM Orders</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Reformat and set QUERY for CONNECTION_TYPE 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var connFlags = {};
+connFlags[&apos;mysql&apos;] = { quoteIdentifiers: true, quoteChar: &quot;`&quot;, caseFlag : 0 };
+connFlags[&apos;sqlserver&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;postgresql&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;vertica&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;oracle&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 1 };
+connFlags[&apos;h2&apos;] = { quoteIdentifiers: false, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+
+var quoteIdentifiers = false;
+var caseFlag = 0;    // leavealone = 0, upcase = 1, downcase = -1, camelcase = ?  
+
+var type = vars.get(&quot;CONNECTION_TYPE&quot;);
+
+quoteIdentifiers = connFlags[type].quoteIdentifiers;
+quoteChar = connFlags[type].quoteChar;
+caseFlag = connFlags[type].caseFlag;
+
+log.info(&quot;connection: &quot;+type);
+log.info(  &quot;quoteIdentifiers: &quot;+quoteIdentifiers);
+log.info(&quot;  quoteChar: &quot;+quoteChar);
+log.info(&quot;  caseFlag: &quot;+caseFlag);
+
+function fixIdent(idname,quote,quoteChar,caseflag) {
+
+     var id;
+	switch (caseflag) {
+
+		case 0:  // leave alone
+		    id = idname;
+		    break;
+		case 1: // upcase
+		    id = idname.toUpperCase();
+		    break;
+	     case -1: // downcase
+	         id = idname.toLowerCase();
+	         break;
+	     default:
+	         id = idname;
+	         break;
+	     
+	}
+
+	if (quote) {
+		id = quoteChar + id + quoteChar;
+	}
+	return id;
+}
+
+//var query = &quot;Select \\&quot;ProductName\\&quot;,\\&quot;CategoryID\\&quot;,\\&quot;UnitPrice\\&quot; FROM \\&quot;Products\\&quot; &quot;;
+var query = Parameters; 
+
+if (quoteIdentifiers) {
+
+	var toks = query.split(&quot; &quot;);
+	var identifiers = toks[1];
+     var ids;
+
+     var wildcard_ids = identifiers == &quot;*&quot;;
+
+     var q = &quot;SELECT &quot;;
+     
+	if (wildcard_ids) {
+	   ids = &quot; * &quot;;	   
+	} else {
+        ids = identifiers.split(&quot;,&quot;);
+	}
+
+	var table = toks[3];
+
+	
+     if (wildcard_ids) {
+
+       q = q + ids;
+     } else {
+        var i=0;
+	   for (i=0; i&lt;ids.length-1; i++) {
+
+		 q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)+&quot;,&quot;;
+		
+	   }
+	   q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)
+     }
+	q = q + &quot; FROM &quot; + fixIdent(table,quoteIdentifiers,quoteChar,caseFlag);
+
+	log.info(&quot;NEW query: &apos;&quot;+q+&quot;&apos;&quot;);
+     query = q;
+	
+}
+
+
+
+vars.put(&apos;QUERY&apos;,query);
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="►   ${__uppercase(${CONNECTION_TYPE})}" enabled="true">
+          <stringProp name="TestPlan.comments">   Emit Database Type</stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">
+ResponseCode = 200;
+ResponseMessage=&quot;Using DB:  ${CONNECTION_TYPE}&quot;;</stringProp>
+          <stringProp name="scriptLanguage">js</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : DELETE" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49590">204</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : CREATE " enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{  &#xd;
+  &quot;name&quot;:&quot;${DVD_NAME}&quot;,&#xd;
+  &quot;info&quot;:&quot;Group on CategoryID and provide a max UnitPrice&quot;,&#xd;
+  &quot;starts&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;sql&quot;,&#xd;
+      &quot;query&quot;:&quot;${QUERY}&quot;,&#xd;
+      &quot;connection&quot;:${CONNECTION}&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;operations&quot;: [&#xd;
+    {&#xd;
+      &quot;name&quot;: &quot;myBin&quot;,&#xd;
+      &quot;type&quot;: &quot;bin&quot;,&#xd;
+      &quot;alias&quot;: &quot;ShipViaBins&quot;,&#xd;
+      &quot;mode&quot;: {&#xd;
+        &quot;numberOfBins&quot;: 20,&#xd;
+        &quot;type&quot;: &quot;auto&quot;&#xd;
+      },&#xd;
+      &quot;column&quot;: {&#xd;
+        &quot;name&quot;: &quot;ShipVia&quot;&#xd;
+      }&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;aggregationColumns&quot;: [&#xd;
+        {&#xd;
+          &quot;alias&quot;: &quot;AverageFrieghtPerShipVia&quot;,&#xd;
+          &quot;name&quot;: &quot;Freight&quot;,&#xd;
+          &quot;aggregation&quot;: &quot;average&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;type&quot;: &quot;group&quot;,&#xd;
+      &quot;columns&quot;: [&#xd;
+        {&#xd;
+          &quot;name&quot;: &quot;ShipViaBins&quot;&#xd;
+        }&#xd;
+      ]&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;type&quot;: &quot;calculation&quot;,&#xd;
+      &quot;alias&quot;: &quot;FreightTimesAggregate&quot;,&#xd;
+      &quot;expression&quot;: &quot;[Freight] * AverageFrieghtPerShipVia&quot;&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;ends&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;return&quot;,&#xd;
+      &quot;includeMetadata&quot;:{  &#xd;
+        &quot;rowCount&quot;:true&#xd;
+      }&#xd;
+    }&#xd;
+  ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : READ" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  Data : QUERY" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = true" enabled="false">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:11 rc:77</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = false" enabled="true">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:2 rc:8</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <fileName>true</fileName>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration" reference="../../../../hashTree[6]/ResultCollector/objProp[2]/value"/>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration" reference="../../../../hashTree[6]/ResultCollector[2]/objProp[2]/value"/>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <boolProp name="useGroupName">true</boolProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller - Bin, Aggregate, Calculate the Aggregate with Freight DATAACQ-2857" enabled="false">
+        <stringProp name="ForeachController.inputVal">DB</stringProp>
+        <stringProp name="ForeachController.returnVal">CONNECTION_TYPE</stringProp>
+        <boolProp name="ForeachController.useSeparator">true</boolProp>
+      </ForeachController>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set DVD Name" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">TEST_001</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Set Dataview Definition Name 
+
+vars.put(&quot;DVD_NAME&quot;, args[0]);
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Connection Block from Type" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">${CONNECTION_TYPE}</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Build CONNECTION from CONNECTION_TYPE
+
+var mysql_conn = 
+{
+     type : &quot;jdbc&quot;,
+     driver: &quot;com.mysql.jdbc.Driver&quot;,
+     url: &quot;jdbc:mysql://QaMySql/qanorthwind_info&quot;,
+     user: &quot;root&quot;,
+     password: &quot;LGXpass&quot;	  
+};
+var sqlserver_conn = 
+{
+     type: &quot;jdbc&quot;,
+	driver:&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;,
+     url:&quot;jdbc:sqlserver://QASQL2K8:1433;databaseName=LargeNorthwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;LGXpass&quot; 
+};
+var postgresql_conn =  
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;org.postgresql.Driver&quot;,
+	url: &quot;jdbc:postgresql://qamysql.logixml.local:6432/qanorthwind_cs&quot;,
+	user: &quot;postgres&quot;,
+	password: &quot;LGXpass&quot;
+};
+var vertica_conn = 
+{
+     &quot;type&quot;: &quot;jdbc&quot;,
+     &quot;driver&quot;:&quot;com.vertica.jdbc.Driver&quot;,
+     &quot;url&quot;:&quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,
+     &quot;user&quot;:&quot;northwind&quot;,
+     &quot;password&quot;:&quot;lgxadmin&quot;
+
+};
+var oracle_conn = 
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;oracle.jdbc.driver.OracleDriver&quot;,
+     url: &quot;jdbc:oracle:thin:@//QAORACLE11G.logixml.local/LOGIXML&quot;,
+     user: &quot;northwindqa_cs&quot;,
+     password: &quot;NorthwindQA_CS&quot;           	            
+};
+var h2_conn = 
+{
+	type: &quot;jdbc&quot;,
+     driver:&quot;org.h2.Driver&quot;,
+     url:&quot;jdbc:h2:tcp://localhost/Northwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;&quot;
+};
+
+var connList = {};
+
+connList[&apos;mysql&apos;] = mysql_conn;
+connList[&apos;sqlserver&apos;] = sqlserver_conn;
+connList[&apos;postgresql&apos;] = postgresql_conn;
+connList[&apos;vertica&apos;] = vertica_conn;
+connList[&apos;oracle&apos;] = oracle_conn;
+connList[&apos;h2&apos;] = h2_conn; 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var conn = JSON.stringify(connList[args[0]]);
+
+vars.put(&apos;CONNECTION&apos;,conn);
+
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Query" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">SELECT * FROM Orders</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Reformat and set QUERY for CONNECTION_TYPE 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var connFlags = {};
+connFlags[&apos;mysql&apos;] = { quoteIdentifiers: true, quoteChar: &quot;`&quot;, caseFlag : 0 };
+connFlags[&apos;sqlserver&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;postgresql&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;vertica&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;oracle&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 1 };
+connFlags[&apos;h2&apos;] = { quoteIdentifiers: false, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+
+var quoteIdentifiers = false;
+var caseFlag = 0;    // leavealone = 0, upcase = 1, downcase = -1, camelcase = ?  
+
+var type = vars.get(&quot;CONNECTION_TYPE&quot;);
+
+quoteIdentifiers = connFlags[type].quoteIdentifiers;
+quoteChar = connFlags[type].quoteChar;
+caseFlag = connFlags[type].caseFlag;
+
+log.info(&quot;connection: &quot;+type);
+log.info(  &quot;quoteIdentifiers: &quot;+quoteIdentifiers);
+log.info(&quot;  quoteChar: &quot;+quoteChar);
+log.info(&quot;  caseFlag: &quot;+caseFlag);
+
+function fixIdent(idname,quote,quoteChar,caseflag) {
+
+     var id;
+	switch (caseflag) {
+
+		case 0:  // leave alone
+		    id = idname;
+		    break;
+		case 1: // upcase
+		    id = idname.toUpperCase();
+		    break;
+	     case -1: // downcase
+	         id = idname.toLowerCase();
+	         break;
+	     default:
+	         id = idname;
+	         break;
+	     
+	}
+
+	if (quote) {
+		id = quoteChar + id + quoteChar;
+	}
+	return id;
+}
+
+//var query = &quot;Select \\&quot;ProductName\\&quot;,\\&quot;CategoryID\\&quot;,\\&quot;UnitPrice\\&quot; FROM \\&quot;Products\\&quot; &quot;;
+var query = Parameters; 
+
+if (quoteIdentifiers) {
+
+	var toks = query.split(&quot; &quot;);
+	var identifiers = toks[1];
+     var ids;
+
+     var wildcard_ids = identifiers == &quot;*&quot;;
+
+     var q = &quot;SELECT &quot;;
+     
+	if (wildcard_ids) {
+	   ids = &quot; * &quot;;	   
+	} else {
+        ids = identifiers.split(&quot;,&quot;);
+	}
+
+	var table = toks[3];
+
+	
+     if (wildcard_ids) {
+
+       q = q + ids;
+     } else {
+        var i=0;
+	   for (i=0; i&lt;ids.length-1; i++) {
+
+		 q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)+&quot;,&quot;;
+		
+	   }
+	   q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)
+     }
+	q = q + &quot; FROM &quot; + fixIdent(table,quoteIdentifiers,quoteChar,caseFlag);
+
+	log.info(&quot;NEW query: &apos;&quot;+q+&quot;&apos;&quot;);
+     query = q;
+	
+}
+
+
+
+vars.put(&apos;QUERY&apos;,query);
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="►   ${__uppercase(${CONNECTION_TYPE})}" enabled="true">
+          <stringProp name="TestPlan.comments">   Emit Database Type</stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">
+ResponseCode = 200;
+ResponseMessage=&quot;Using DB:  ${CONNECTION_TYPE}&quot;;</stringProp>
+          <stringProp name="scriptLanguage">js</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : DELETE" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49590">204</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : CREATE " enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{  &#xd;
+  &quot;name&quot;:&quot;${DVD_NAME}&quot;,&#xd;
+  &quot;info&quot;:&quot;Group on CategoryID and provide a max UnitPrice&quot;,&#xd;
+  &quot;starts&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;sql&quot;,&#xd;
+      &quot;query&quot;:&quot;${QUERY}&quot;,&#xd;
+      &quot;connection&quot;:${CONNECTION}&#xd;
+    }&#xd;
+  ],&#xd;
+ &quot;operations&quot;: [&#xd;
+    {&#xd;
+      &quot;name&quot;: &quot;myBin&quot;,&#xd;
+      &quot;type&quot;: &quot;bin&quot;,&#xd;
+      &quot;alias&quot;: &quot;ShipViaBins&quot;,&#xd;
+      &quot;mode&quot;: {&#xd;
+        &quot;numberOfBins&quot;: 20,&#xd;
+        &quot;type&quot;: &quot;auto&quot;&#xd;
+      },&#xd;
+      &quot;column&quot;: {&#xd;
+        &quot;name&quot;: &quot;ShipVia&quot;&#xd;
+      }&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;aggregationColumns&quot;: [&#xd;
+        {&#xd;
+          &quot;alias&quot;: &quot;AverageFrieghtPerShipVia&quot;,&#xd;
+          &quot;name&quot;: &quot;Freight&quot;,&#xd;
+          &quot;aggregation&quot;: &quot;average&quot;&#xd;
+        }&#xd;
+      ],&#xd;
+      &quot;type&quot;: &quot;group&quot;,&#xd;
+      &quot;columns&quot;: [&#xd;
+        {&#xd;
+          &quot;name&quot;: &quot;ShipViaBins&quot;&#xd;
+        }&#xd;
+      ]&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;type&quot;: &quot;calculation&quot;,&#xd;
+      &quot;alias&quot;: &quot;FreightTimesAggregate&quot;,&#xd;
+      &quot;expression&quot;: &quot;[Freight] * [AverageFrieghtPerShipVia]&quot;&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;ends&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;return&quot;,&#xd;
+      &quot;includeMetadata&quot;:{  &#xd;
+        &quot;rowCount&quot;:true&#xd;
+      }&#xd;
+    }&#xd;
+  ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : READ" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  Data : QUERY" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = true" enabled="false">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:11 rc:77</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = false" enabled="true">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:2 rc:8</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <fileName>true</fileName>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration" reference="../../../../hashTree[6]/ResultCollector/objProp[2]/value"/>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration" reference="../../../../hashTree[6]/ResultCollector[2]/objProp[2]/value"/>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <boolProp name="useGroupName">true</boolProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller - Calculate after Binning [Freight] * [ShipViaBins]" enabled="true">
+        <stringProp name="ForeachController.inputVal">DB</stringProp>
+        <stringProp name="ForeachController.returnVal">CONNECTION_TYPE</stringProp>
+        <boolProp name="ForeachController.useSeparator">true</boolProp>
+      </ForeachController>
+      <hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set DVD Name" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">TEST_001</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Set Dataview Definition Name 
+
+vars.put(&quot;DVD_NAME&quot;, args[0]);
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Connection Block from Type" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">${CONNECTION_TYPE}</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Build CONNECTION from CONNECTION_TYPE
+
+var mysql_conn = 
+{
+     type : &quot;jdbc&quot;,
+     driver: &quot;com.mysql.jdbc.Driver&quot;,
+     url: &quot;jdbc:mysql://QaMySql/qanorthwind_info&quot;,
+     user: &quot;root&quot;,
+     password: &quot;LGXpass&quot;	  
+};
+var sqlserver_conn = 
+{
+     type: &quot;jdbc&quot;,
+	driver:&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;,
+     url:&quot;jdbc:sqlserver://QASQL2K8:1433;databaseName=LargeNorthwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;LGXpass&quot; 
+};
+var postgresql_conn =  
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;org.postgresql.Driver&quot;,
+	url: &quot;jdbc:postgresql://qamysql.logixml.local:6432/qanorthwind_cs&quot;,
+	user: &quot;postgres&quot;,
+	password: &quot;LGXpass&quot;
+};
+var vertica_conn = 
+{
+     &quot;type&quot;: &quot;jdbc&quot;,
+     &quot;driver&quot;:&quot;com.vertica.jdbc.Driver&quot;,
+     &quot;url&quot;:&quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,
+     &quot;user&quot;:&quot;northwind&quot;,
+     &quot;password&quot;:&quot;lgxadmin&quot;
+
+};
+var oracle_conn = 
+{
+	type: &quot;jdbc&quot;,
+	driver: &quot;oracle.jdbc.driver.OracleDriver&quot;,
+     url: &quot;jdbc:oracle:thin:@//QAORACLE11G.logixml.local/LOGIXML&quot;,
+     user: &quot;northwindqa_cs&quot;,
+     password: &quot;NorthwindQA_CS&quot;           	            
+};
+var h2_conn = 
+{
+	type: &quot;jdbc&quot;,
+     driver:&quot;org.h2.Driver&quot;,
+     url:&quot;jdbc:h2:tcp://localhost/Northwind&quot;,
+     user:&quot;sa&quot;,
+     password:&quot;&quot;
+};
+
+var connList = {};
+
+connList[&apos;mysql&apos;] = mysql_conn;
+connList[&apos;sqlserver&apos;] = sqlserver_conn;
+connList[&apos;postgresql&apos;] = postgresql_conn;
+connList[&apos;vertica&apos;] = vertica_conn;
+connList[&apos;oracle&apos;] = oracle_conn;
+connList[&apos;h2&apos;] = h2_conn; 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var conn = JSON.stringify(connList[args[0]]);
+
+vars.put(&apos;CONNECTION&apos;,conn);
+
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Set Query" enabled="true">
+          <stringProp name="scriptLanguage">js</stringProp>
+          <stringProp name="parameters">SELECT * FROM Orders</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="script">
+// Reformat and set QUERY for CONNECTION_TYPE 
+
+var ctx = org.apache.jmeter.threads.JMeterContextService.getContext();
+var vars = ctx.getVariables();
+
+var connFlags = {};
+connFlags[&apos;mysql&apos;] = { quoteIdentifiers: true, quoteChar: &quot;`&quot;, caseFlag : 0 };
+connFlags[&apos;sqlserver&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;postgresql&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;vertica&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+connFlags[&apos;oracle&apos;] = { quoteIdentifiers: true, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 1 };
+connFlags[&apos;h2&apos;] = { quoteIdentifiers: false, quoteChar: &apos;\\\&quot;&apos;, caseFlag : 0 };
+
+var quoteIdentifiers = false;
+var caseFlag = 0;    // leavealone = 0, upcase = 1, downcase = -1, camelcase = ?  
+
+var type = vars.get(&quot;CONNECTION_TYPE&quot;);
+
+quoteIdentifiers = connFlags[type].quoteIdentifiers;
+quoteChar = connFlags[type].quoteChar;
+caseFlag = connFlags[type].caseFlag;
+
+log.info(&quot;connection: &quot;+type);
+log.info(  &quot;quoteIdentifiers: &quot;+quoteIdentifiers);
+log.info(&quot;  quoteChar: &quot;+quoteChar);
+log.info(&quot;  caseFlag: &quot;+caseFlag);
+
+function fixIdent(idname,quote,quoteChar,caseflag) {
+
+     var id;
+	switch (caseflag) {
+
+		case 0:  // leave alone
+		    id = idname;
+		    break;
+		case 1: // upcase
+		    id = idname.toUpperCase();
+		    break;
+	     case -1: // downcase
+	         id = idname.toLowerCase();
+	         break;
+	     default:
+	         id = idname;
+	         break;
+	     
+	}
+
+	if (quote) {
+		id = quoteChar + id + quoteChar;
+	}
+	return id;
+}
+
+//var query = &quot;Select \\&quot;ProductName\\&quot;,\\&quot;CategoryID\\&quot;,\\&quot;UnitPrice\\&quot; FROM \\&quot;Products\\&quot; &quot;;
+var query = Parameters; 
+
+if (quoteIdentifiers) {
+
+	var toks = query.split(&quot; &quot;);
+	var identifiers = toks[1];
+     var ids;
+
+     var wildcard_ids = identifiers == &quot;*&quot;;
+
+     var q = &quot;SELECT &quot;;
+     
+	if (wildcard_ids) {
+	   ids = &quot; * &quot;;	   
+	} else {
+        ids = identifiers.split(&quot;,&quot;);
+	}
+
+	var table = toks[3];
+
+	
+     if (wildcard_ids) {
+
+       q = q + ids;
+     } else {
+        var i=0;
+	   for (i=0; i&lt;ids.length-1; i++) {
+
+		 q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)+&quot;,&quot;;
+		
+	   }
+	   q = q + fixIdent(ids[i],quoteIdentifiers,quoteChar,caseFlag)
+     }
+	q = q + &quot; FROM &quot; + fixIdent(table,quoteIdentifiers,quoteChar,caseFlag);
+
+	log.info(&quot;NEW query: &apos;&quot;+q+&quot;&apos;&quot;);
+     query = q;
+	
+}
+
+
+
+vars.put(&apos;QUERY&apos;,query);
+
+</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="►   ${__uppercase(${CONNECTION_TYPE})}" enabled="true">
+          <stringProp name="TestPlan.comments">   Emit Database Type</stringProp>
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">
+ResponseCode = 200;
+ResponseMessage=&quot;Using DB:  ${CONNECTION_TYPE}&quot;;</stringProp>
+          <stringProp name="scriptLanguage">js</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : DELETE" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49590">204</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : CREATE " enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{  &#xd;
+  &quot;name&quot;:&quot;${DVD_NAME}&quot;,&#xd;
+  &quot;info&quot;:&quot;Group on CategoryID and provide a max UnitPrice&quot;,&#xd;
+  &quot;starts&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;sql&quot;,&#xd;
+      &quot;query&quot;:&quot;${QUERY}&quot;,&#xd;
+      &quot;connection&quot;:${CONNECTION}&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;operations&quot;:[  &#xd;
+    {  &#xd;
+      &quot;name&quot;:&quot;myBin&quot;,&#xd;
+      &quot;type&quot;:&quot;bin&quot;,&#xd;
+      &quot;alias&quot;:&quot;ShipViaBins&quot;,&#xd;
+      &quot;mode&quot;:{  &#xd;
+        &quot;numberOfBins&quot;:20,&#xd;
+        &quot;type&quot;:&quot;auto&quot;&#xd;
+      },&#xd;
+      &quot;column&quot;:{  &#xd;
+        &quot;name&quot;:&quot;ShipVia&quot;&#xd;
+      }&#xd;
+    },&#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;calculation&quot;,&#xd;
+      &quot;alias&quot;:&quot;FreightTimesBins&quot;,&#xd;
+      &quot;expression&quot;:&quot;[Freight] * ShipViaBins&quot;&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;ends&quot;:[  &#xd;
+    {  &#xd;
+      &quot;type&quot;:&quot;return&quot;,&#xd;
+      &quot;includeMetadata&quot;:{  &#xd;
+        &quot;rowCount&quot;:true&#xd;
+      }&#xd;
+    }&#xd;
+  ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49587">201</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  DataView : READ" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="     ◦  Data : QUERY" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/logiapi/dataservice/dataviews/${DVD_NAME}/query</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = true" enabled="false">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:11 rc:77</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+          <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="JSR223 Assertion KEEPDETAIL = false" enabled="true">
+            <stringProp name="scriptLanguage">js</stringProp>
+            <stringProp name="parameters">cc:2 rc:8</stringProp>
+            <stringProp name="filename">assertLib.js</stringProp>
+            <stringProp name="cacheKey"></stringProp>
+            <stringProp name="script"></stringProp>
+          </JSR223Assertion>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <fileName>true</fileName>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration" reference="../../../../hashTree[6]/ResultCollector/objProp[2]/value"/>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <objProp>
+            <name></name>
+            <value class="SampleSaveConfiguration" reference="../../../../hashTree[6]/ResultCollector[2]/objProp[2]/value"/>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <boolProp name="useGroupName">true</boolProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

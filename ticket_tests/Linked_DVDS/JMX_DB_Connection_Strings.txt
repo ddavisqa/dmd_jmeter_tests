@@ -1,0 +1,31 @@
+
+MySQL
+
+connection&quot;: {&#xd;
+   	   &quot;type&quot;:&quot;jdbc&quot;,&#xd;
+        &quot;driver&quot;: &quot;org.postgresql.Driver&quot;,&#xd;
+        &quot;url&quot;: &quot;jdbc:postgresql://qamysql.logixml.local/qanorthwind_cs&quot;,&#xd;
+        &quot;user&quot;: &quot;postgres&quot;,&#xd;
+        &quot;password&quot;: &quot;LGXpass&quot;&#xd;
+      }
+
+Postgres
+
+connection&quot;: {&#xd;
+   	   &quot;type&quot;:&quot;jdbc&quot;,&#xd;
+        &quot;driver&quot;: &quot;org.postgresql.Driver&quot;,&#xd;
+        &quot;url&quot;: &quot;jdbc:postgresql://qamysql.logixml.local/qanorthwind_cs&quot;,&#xd;
+        &quot;user&quot;: &quot;postgres&quot;,&#xd;
+        &quot;password&quot;: &quot;LGXpass&quot;&#xd;
+      }
+	  	  
+Vertica
+connection&quot;: {&#xd;
+   	   &quot;type&quot;:&quot;jdbc&quot;,&#xd;
+        &quot;driver&quot;: &quot;com.vertica.jdbc.Driver&quot;,&#xd;
+        &quot;url&quot;: &quot;jdbc:vertica://qavertica.logixml.local:5433/vmart&quot;,&#xd;
+        &quot;user&quot;: &quot;northwind&quot;,&#xd;
+        &quot;password&quot;: &quot;lgxadmin&quot;&#xd;
+      }
+
+	  
